@@ -55,7 +55,26 @@ function Home(){
         setList({...dummy_list,doneList: dummy_done_array})
         localStorage.setItem("list-items",JSON.stringify({...dummy_list,doneList: dummy_done_array}));
     }
+    function del_do(id){
+        const dummy_do = {...do_object}
+        delete dummy_do[id]
+        const dummy_do_array = Object.keys(dummy_do).map(function(value){
+            return dummy_do[value];
+        })
+        setList({...list,doList: dummy_do_array})
+        localStorage.setItem("list-items",JSON.stringify({...list,doList: dummy_do_array}));
 
+    }
+    function del_done(id){
+        const dummy_done = {...done_object}
+        delete dummy_done[id]
+        const dummy_done_array = Object.keys(dummy_done).map(function(value){
+            return dummy_done[value];
+        })
+        setList({...list,doneList: dummy_done_array})
+        localStorage.setItem("list-items",JSON.stringify({...list,doneList: dummy_done_array}));
+
+    }
     const schema = Yup.object().shape({
         todo: Yup.string().required("Please write some artcile!")
     })
@@ -72,7 +91,7 @@ function Home(){
                 <div className="space-y-2">
                     <h2 className="text-xl font-bold">Things to do</h2>
                     <ul>
-                        {list.doList.length>0 && do_keys.map((value) => <Checkbox id={value} name={do_object[value]} done={done_task} check={false}/>)}
+                        {list.doList.length>0 && do_keys.map((value) => <Checkbox id={value} name={do_object[value]} done={done_task} check={false} del={del_do}/>)}
                     </ul>
                 </div>
                 <div>
@@ -100,7 +119,7 @@ function Home(){
                 <div className="space-y-2">
                 <h2 className="text-xl font-bold">Things done</h2>
                 <ul>
-                    {list.doneList.length>0 && done_keys.map((value) => <Checkbox id={value} name={done_object[value]} done={do_task} check={true} />)}
+                    {list.doneList.length>0 && done_keys.map((value) => <Checkbox id={value} name={done_object[value]} done={do_task} check={true} del={del_done}/>)}
                 </ul>
                 </div>
             </div>      
